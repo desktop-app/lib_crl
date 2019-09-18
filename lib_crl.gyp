@@ -6,16 +6,15 @@
 
 {
   'includes': [
-    '../gyp_helpers/common/common.gypi',
+    '../gyp/helpers/common/common.gypi',
   ],
   'targets': [{
     'target_name': 'lib_crl',
-    'hard_dependency': 1,
     'dependencies': [
     ],
     'includes': [
-      '../gyp_helpers/common/library.gypi',
-      '../gyp_helpers/modules/qt.gypi',
+      '../gyp/helpers/common/library.gypi',
+      '../gyp/helpers/modules/qt.gypi',
     ],
     'defines': [
     ],
