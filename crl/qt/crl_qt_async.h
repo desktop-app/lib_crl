@@ -45,8 +45,9 @@ inline auto create_runnable(Callable &&callable) {
 
 template <typename Callable>
 inline void async_any(Callable &&callable) {
-	QThreadPool::globalInstance()->start(
-		create_runnable(std::forward<Callable>(callable)));
+	if (const auto pool = QThreadPool::globalInstance()) {
+		pool->start(create_runnable(std::forward<Callable>(callable)));
+	}
 }
 
 inline void async_plain(void (*callable)(void*), void *argument) {
