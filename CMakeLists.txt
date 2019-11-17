@@ -57,6 +57,5 @@ PUBLIC
 
 target_link_libraries(lib_crl
 PUBLIC
-    common
     external_qt
 )
