@@ -1,4 +1,11 @@
+# This file is part of Desktop App Toolkit,
+# a set of libraries for developing nice desktop applications.
+#
+# For license and copyright information please follow this link:
+# https://github.com/desktop-app/legal/blob/master/LEGAL
+
 add_library(lib_crl OBJECT)
+add_library(desktop-app::lib_crl ALIAS lib_crl)
 init_target(lib_crl)
 
 get_filename_component(src_loc . REALPATH)
@@ -57,5 +64,5 @@ PUBLIC
 
 target_link_libraries(lib_crl
 PUBLIC
-    external_qt
+    desktop-app::external_qt
 )
