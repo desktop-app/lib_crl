@@ -11,14 +11,13 @@
 #include <memory>
 #include <type_traits>
 
-namespace crl::details {
+namespace crl {
+namespace details {
 
 template <typename T>
 constexpr std::size_t dependent_zero = 0;
 
-} // namespace crl::details
-
-namespace crl {
+} // namespace details
 
 template <typename T, typename Enable = void>
 struct guard_traits;
