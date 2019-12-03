@@ -10,7 +10,7 @@ init_target(lib_crl)
 
 get_filename_component(src_loc . REALPATH)
 
-set(lib_crl_sources
+nice_target_sources(lib_crl ${src_loc}
 PRIVATE
     crl/common/crl_common_config.h
     crl/common/crl_common_guards.h
@@ -55,7 +55,6 @@ PRIVATE
     crl/crl_time.cpp
     crl/crl_time.h
 )
-nice_target_sources(lib_crl ${src_loc} "${lib_crl_sources}")
 
 target_include_directories(lib_crl
 PUBLIC
