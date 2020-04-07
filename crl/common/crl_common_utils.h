@@ -49,6 +49,7 @@ public:
 	finalizer &operator=(finalizer &&other) {
 		_callable = std::move(other._callable);
 		_disabled = std::exchange(other._disabled, true);
+		return *this;
 	}
 	~finalizer() {
 		if (!_disabled) {
