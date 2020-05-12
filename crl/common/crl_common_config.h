@@ -6,7 +6,7 @@
 //
 #pragma once
 
-#if defined _MSC_VER
+#if defined _MSC_VER || defined __MINGW32__
 #define CRL_USE_WINAPI_TIME
 #elif defined __APPLE__ // _MSC_VER
 #define CRL_USE_MAC_TIME
