@@ -16,6 +16,7 @@ PRIVATE
     crl/common/crl_common_guards.h
     crl/common/crl_common_list.cpp
     crl/common/crl_common_list.h
+    crl/common/crl_common_object_async.h
     crl/common/crl_common_on_main.cpp
     crl/common/crl_common_on_main.h
     crl/common/crl_common_on_main_guarded.h
@@ -49,6 +50,8 @@ PRIVATE
     crl/crl.h
     crl/crl_async.h
     crl/crl_object_on_queue.h
+    crl/crl_object_on_thread.cpp
+    crl/crl_object_on_thread.h
     crl/crl_on_main.h
     crl/crl_queue.h
     crl/crl_semaphore.h
