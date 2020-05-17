@@ -8,6 +8,7 @@
 
 #include <crl/common/crl_common_config.h>
 #include <crl/crl_on_main.h>
+#include <crl/crl_semaphore.h>
 #include <memory>
 #include <tuple>
 
