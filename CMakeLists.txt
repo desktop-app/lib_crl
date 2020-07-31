@@ -64,7 +64,12 @@ PUBLIC
     ${src_loc}
 )
 
-if (build_macstore)
+if (LINUX)
+    target_link_libraries(lib_crl
+    PUBLIC
+        pthread
+    )
+elseif (build_macstore)
     target_compile_definitions(lib_crl
     PUBLIC
         CRL_USE_COMMON_QUEUE
