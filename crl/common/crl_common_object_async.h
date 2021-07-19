@@ -392,7 +392,7 @@ object_async<Policy, Type>::object_async(Args &&...args)
 	constexpr auto plain_construct = std::is_constructible_v<
 		Type,
 		Args...>;
-	constexpr auto with_weak_construct = std::is_constructible_v<
+	[[maybe_unused]] constexpr auto with_weak_construct = std::is_constructible_v<
 		Type,
 		weak_async<Policy, Type>,
 		Args...>;
