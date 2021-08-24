@@ -9,6 +9,7 @@
 #if defined CRL_USE_COMMON_QUEUE || !defined CRL_USE_DISPATCH
 
 #include <crl/crl_async.h>
+#include <crl/crl_fp_exceptions.h>
 
 namespace crl {
 
@@ -38,6 +39,13 @@ void queue::process() {
 }
 
 void queue::ProcessCallback(void *that) {
+#ifdef CRL_THROW_FP_EXCEPTIONS
+	static thread_local const bool kInited = [] {
+		toggle_fp_exceptions(true);
+		return true;
+	}();
+#endif // CRL_THROW_FP_EXCEPTIONS
+
 	static_cast<queue*>(that)->process();
 }
 

@@ -6,6 +6,7 @@
 //
 #include <crl/crl_object_on_thread.h>
 
+#include <crl/crl_fp_exceptions.h>
 #include <thread>
 
 namespace crl::details {
@@ -15,6 +16,8 @@ thread_policy::thread_policy() {
 }
 
 void thread_policy::run() {
+	toggle_fp_exceptions(true);
+
 	while (true) {
 		if (!_list.process()) {
 			break;

@@ -22,6 +22,7 @@
 #elif defined _M_IX86 // _WIN64
 #define CRL_USE_WINAPI
 #define CRL_WINAPI_X86
+#define CRL_THROW_FP_EXCEPTIONS
 #else // _M_IX86
 #error "Configuration is not supported."
 #endif // !_WIN64 && !_M_IX86

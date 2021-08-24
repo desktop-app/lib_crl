@@ -13,6 +13,7 @@ get_filename_component(src_loc . REALPATH)
 nice_target_sources(lib_crl ${src_loc}
 PRIVATE
     crl/common/crl_common_config.h
+    crl/common/crl_common_fp_exceptions.cpp
     crl/common/crl_common_guards.h
     crl/common/crl_common_list.cpp
     crl/common/crl_common_list.h
@@ -41,6 +42,7 @@ PRIVATE
     crl/winapi/crl_winapi_async.cpp
     crl/winapi/crl_winapi_async.h
     crl/winapi/crl_winapi_dll.h
+    crl/winapi/crl_winapi_fp_exceptions.cpp
     crl/winapi/crl_winapi_list.cpp
     crl/winapi/crl_winapi_list.h
     crl/winapi/crl_winapi_semaphore.cpp
@@ -49,6 +51,7 @@ PRIVATE
     crl/winapi/crl_winapi_windows_h.h
     crl/crl.h
     crl/crl_async.h
+    crl/crl_fp_exceptions.h
     crl/crl_object_on_queue.h
     crl/crl_object_on_thread.cpp
     crl/crl_object_on_thread.h

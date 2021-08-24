@@ -4,12 +4,18 @@
 // For license and copyright information please follow this link:
 // https://github.com/desktop-app/legal/blob/master/LEGAL
 //
-#pragma once
-
-#include <crl/crl_semaphore.h>
-#include <crl/crl_async.h>
-#include <crl/crl_fp_exceptions.h>
-#include <crl/crl_queue.h>
-#include <crl/crl_on_main.h>
-#include <crl/crl_object_on_queue.h>
 #include <crl/crl_time.h>
+
+#ifndef CRL_USE_WINAPI_TIME
+
+#include <float.h>
+
+namespace crl {
+
+void toggle_fp_exceptions(bool throwing) {
+    // We activate them only on Windows right now.
+}
+
+} // namespace crl
+
+#endif // !CRL_USE_WINAPI_TIME
