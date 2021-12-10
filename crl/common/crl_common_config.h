@@ -33,12 +33,21 @@
 #define CRL_USE_WINAPI_LIST
 #endif // !CRL_FORCE_STD_LIST
 
-#elif defined __APPLE__ && !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
+#elif !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
+
+// gcc compatibility
+#ifndef __has_feature
+#define __has_feature(x) 0
+#endif // !__has_feature
+
+#ifndef __has_extension
+#define __has_extension __has_feature
+#endif // !__has_extension
 
 #define CRL_USE_DISPATCH
 #define CRL_USE_COMMON_LIST
 
-#elif __has_include(<QtCore/QThreadPool>) // __APPLE__ && !CRL_FORCE_QT
+#elif __has_include(<QtCore/QThreadPool>) // !CRL_FORCE_QT
 
 #define CRL_USE_QT
 #define CRL_USE_COMMON_LIST

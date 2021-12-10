@@ -70,9 +70,12 @@ PUBLIC
 if (LINUX)
     target_link_libraries(lib_crl
     PUBLIC
+        desktop-app::external_dispatch
         pthread
     )
-elseif (build_macstore)
+endif()
+
+if (build_macstore OR LINUX)
     target_compile_definitions(lib_crl
     PUBLIC
         CRL_USE_COMMON_QUEUE
