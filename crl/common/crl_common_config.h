@@ -33,7 +33,7 @@
 #define CRL_USE_WINAPI_LIST
 #endif // !CRL_FORCE_STD_LIST
 
-#elif !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
+#elif __has_include(<dispatch/dispatch.h>) && !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
 
 // gcc compatibility
 #ifndef __has_feature
@@ -47,7 +47,7 @@
 #define CRL_USE_DISPATCH
 #define CRL_USE_COMMON_LIST
 
-#elif __has_include(<QtCore/QThreadPool>) // !CRL_FORCE_QT
+#elif __has_include(<QtCore/QThreadPool>) // dispatch && !CRL_FORCE_QT
 
 #define CRL_USE_QT
 #define CRL_USE_COMMON_LIST
