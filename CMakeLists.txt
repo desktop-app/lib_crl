@@ -67,15 +67,21 @@ PUBLIC
     ${src_loc}
 )
 
-if (LINUX)
+if (TARGET desktop-app::external_dispatch)
     target_link_libraries(lib_crl
     PUBLIC
         desktop-app::external_dispatch
+    )
+endif()
+
+if (LINUX)
+    target_link_libraries(lib_crl
+    PUBLIC
         pthread
     )
 endif()
 
-if (build_macstore OR LINUX)
+if (build_macstore OR TARGET desktop-app::external_dispatch)
     target_compile_definitions(lib_crl
     PUBLIC
         CRL_USE_COMMON_QUEUE
