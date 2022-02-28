@@ -72,6 +72,11 @@ if (TARGET desktop-app::external_dispatch)
     PUBLIC
         desktop-app::external_dispatch
     )
+else()
+    target_compile_definitions(lib_crl
+    PUBLIC
+        CRL_FORCE_QT
+    )
 endif()
 
 if (build_macstore OR TARGET desktop-app::external_dispatch)
