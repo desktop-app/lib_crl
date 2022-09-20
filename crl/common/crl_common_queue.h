@@ -54,7 +54,7 @@ private:
 
 	main_queue_processor _main_processor = nullptr;
 	details::list _list;
-	std::atomic<bool> _queued = false;
+	std::atomic_flag _queued = ATOMIC_FLAG_INIT;
 
 };
 

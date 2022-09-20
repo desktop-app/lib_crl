@@ -22,7 +22,7 @@ void thread_policy::run() {
 		if (!_list.process()) {
 			break;
 		}
-		_queued.store(false);
+		_queued.clear();
 
 		std::unique_lock<std::mutex> lock(_mutex);
 		_variable.wait(lock, [=] { return !_list.empty(); });
@@ -30,8 +30,7 @@ void thread_policy::run() {
 }
 
 void thread_policy::wake_async() const {
-	auto expected = false;
-	if (_queued.compare_exchange_strong(expected, true)) {
+	if (!_queued.test_and_set()) {
 		std::unique_lock<std::mutex> lock(_mutex);
 		_variable.notify_one();
 	}

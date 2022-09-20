@@ -27,7 +27,7 @@ private:
 	mutable std::mutex _mutex;
 	mutable std::condition_variable _variable;
 	mutable details::list _list;
-	mutable std::atomic<bool> _queued = false;
+	mutable std::atomic_flag _queued = ATOMIC_FLAG_INIT;
 
 };
 
