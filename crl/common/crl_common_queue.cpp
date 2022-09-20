@@ -19,8 +19,7 @@ queue::queue(main_queue_processor processor) : _main_processor(processor) {
 }
 
 void queue::wake_async() {
-	auto expected = false;
-	if (_queued.compare_exchange_strong(expected, true)) {
+	if (!_queued.test_and_set()) {
 		(_main_processor ? _main_processor : details::async_plain)(
 			ProcessCallback,
 			static_cast<void*>(this));
@@ -31,7 +30,7 @@ void queue::process() {
 	if (!_list.process()) {
 		return;
 	}
-	_queued.store(false);
+	_queued.clear();
 
 	if (!_list.empty()) {
 		wake_async();
