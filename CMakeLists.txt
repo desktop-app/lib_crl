@@ -6,7 +6,7 @@
 
 add_library(lib_crl OBJECT)
 add_library(desktop-app::lib_crl ALIAS lib_crl)
-init_target(lib_crl)
+init_target(lib_crl ltcg)
 
 get_filename_component(src_loc . REALPATH)
 
