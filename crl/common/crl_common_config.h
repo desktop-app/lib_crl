@@ -27,11 +27,9 @@
 #error "Configuration is not supported."
 #endif // !_WIN64 && !_M_IX86
 
-#ifdef CRL_FORCE_STD_LIST
-#define CRL_USE_COMMON_LIST
-#else // CRL_FORCE_STD_LIST
+#ifndef CRL_FORCE_COMMON_LIST
 #define CRL_USE_WINAPI_LIST
-#endif // !CRL_FORCE_STD_LIST
+#endif // !CRL_FORCE_COMMON_LIST
 
 #elif __has_include(<dispatch/dispatch.h>) && !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
 
@@ -45,12 +43,10 @@
 #endif // !__has_extension
 
 #define CRL_USE_DISPATCH
-#define CRL_USE_COMMON_LIST
 
 #elif __has_include(<QtCore/QThreadPool>) // dispatch && !CRL_FORCE_QT
 
 #define CRL_USE_QT
-#define CRL_USE_COMMON_LIST
 
 #else // Qt
 #error "Configuration is not supported."

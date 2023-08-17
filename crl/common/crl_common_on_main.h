@@ -8,10 +8,12 @@
 
 #include <crl/common/crl_common_config.h>
 
-#if defined CRL_USE_COMMON_QUEUE || !defined CRL_USE_DISPATCH
-
 #include <crl/common/crl_common_queue.h>
 #include <atomic>
+
+#ifndef CRL_USE_COMMON_QUEUE
+#define CRL_USE_COMMON_QUEUE
+#endif // !CRL_USE_COMMON_QUEUE
 
 namespace crl::details {
 
@@ -71,5 +73,3 @@ inline void on_main_sync(Callable &&callable) {
 }
 
 } // namespace crl
-
-#endif // CRL_USE_COMMON_QUEUE || !CRL_USE_DISPATCH

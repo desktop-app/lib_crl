@@ -75,7 +75,7 @@ endif()
 if (build_macstore OR TARGET desktop-app::external_dispatch)
     target_compile_definitions(lib_crl
     PUBLIC
-        CRL_USE_COMMON_QUEUE
+        CRL_FORCE_COMMON_QUEUE
     )
 endif()
 

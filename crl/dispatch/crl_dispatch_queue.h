@@ -8,7 +8,7 @@
 
 #include <crl/common/crl_common_config.h>
 
-#if defined CRL_USE_DISPATCH && !defined CRL_USE_COMMON_QUEUE
+#if defined CRL_USE_DISPATCH && !defined CRL_FORCE_COMMON_QUEUE
 
 #include <crl/common/crl_common_utils.h>
 #include <memory>
@@ -83,4 +83,4 @@ private:
 
 } // namespace crl
 
-#endif // CRL_USE_DISPATCH && !CRL_USE_COMMON_QUEUE
+#endif // CRL_USE_DISPATCH && !CRL_FORCE_COMMON_QUEUE

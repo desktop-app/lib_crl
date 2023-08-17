@@ -12,11 +12,13 @@
 
 #include <crl/winapi/crl_winapi_list.h>
 
-#elif defined CRL_USE_COMMON_LIST // CRL_USE_WINAPI_LIST
+#else // CRL_USE_WINAPI_LIST
 
 #include <crl/common/crl_common_utils.h>
 #include <crl/crl_semaphore.h>
 #include <atomic>
+
+#define CRL_USE_COMMON_LIST
 
 namespace crl::details {
 
@@ -85,6 +87,4 @@ private:
 
 } // namespace crl::details
 
-#elif !defined CRL_USE_DISPATCH // CRL_USE_COMMON_LIST
-#error "Configuration is not supported."
-#endif // !CRL_USE_WINAPI_LIST && !CRL_USE_COMMON_LIST
+#endif // !CRL_USE_WINAPI_LIST

@@ -8,7 +8,7 @@
 
 #include <crl/common/crl_common_config.h>
 
-#if defined CRL_USE_DISPATCH && !defined CRL_USE_COMMON_QUEUE
+#if defined CRL_USE_DISPATCH && !defined CRL_FORCE_COMMON_QUEUE
 
 #include <crl/dispatch/crl_dispatch_async.h>
 #include <crl/common/crl_common_utils.h>
@@ -51,4 +51,4 @@ inline void on_main_sync(Callable &&callable) {
 
 } // namespace crl
 
-#endif // CRL_USE_DISPATCH && !CRL_USE_COMMON_QUEUE
+#endif // CRL_USE_DISPATCH && !CRL_FORCE_COMMON_QUEUE
