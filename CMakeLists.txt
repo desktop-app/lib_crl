@@ -34,10 +34,8 @@ PRIVATE
     crl/dispatch/crl_dispatch_semaphore.h
     crl/mac/crl_mac_time.cpp
     crl/linux/crl_linux_time.cpp
-    crl/qt/crl_qt_async.cpp
     crl/qt/crl_qt_async.h
     crl/qt/crl_qt_guards.h
-    crl/qt/crl_qt_semaphore.cpp
     crl/qt/crl_qt_semaphore.h
     crl/winapi/crl_winapi_async.cpp
     crl/winapi/crl_winapi_async.h
