@@ -8,10 +8,7 @@
 
 #include <crl/common/crl_common_config.h>
 
-#ifdef CRL_USE_QT
-
-#include <memory>
-#include <QtCore/QSemaphore>
+#include <semaphore>
 
 namespace crl {
 
@@ -31,10 +28,8 @@ public:
 	}
 
 private:
-	QSemaphore _impl;
+	std::binary_semaphore _impl{0};
 
 };
 
 } // namespace crl
-
-#endif // CRL_USE_QT

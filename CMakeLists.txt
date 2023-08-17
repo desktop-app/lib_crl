@@ -23,6 +23,7 @@ PRIVATE
     crl/common/crl_common_on_main_guarded.h
     crl/common/crl_common_queue.cpp
     crl/common/crl_common_queue.h
+    crl/common/crl_common_semaphore.h
     crl/common/crl_common_sync.h
     crl/common/crl_common_utils.h
     crl/dispatch/crl_dispatch_async.cpp
@@ -36,7 +37,6 @@ PRIVATE
     crl/linux/crl_linux_time.cpp
     crl/qt/crl_qt_async.h
     crl/qt/crl_qt_guards.h
-    crl/qt/crl_qt_semaphore.h
     crl/winapi/crl_winapi_async.cpp
     crl/winapi/crl_winapi_async.h
     crl/winapi/crl_winapi_dll.h
