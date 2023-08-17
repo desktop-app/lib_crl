@@ -8,10 +8,10 @@
 
 #include <crl/common/crl_common_config.h>
 
-#if defined CRL_USE_WINAPI || defined CRL_USE_COMMON_QUEUE
+#ifdef CRL_FORCE_COMMON_QUEUE
 #include <crl/common/crl_common_queue.h>
-#elif defined CRL_USE_DISPATCH // CRL_USE_WINAPI
+#elif defined CRL_USE_DISPATCH // CRL_FORCE_COMMON_QUEUE
 #include <crl/dispatch/crl_dispatch_queue.h>
 #else // CRL_USE_DISPATCH
 #include <crl/common/crl_common_queue.h>
-#endif // !CRL_USE_WINAPI && !CRL_USE_DISPATCH
+#endif // !CRL_FORCE_COMMON_QUEUE && !CRL_USE_DISPATCH

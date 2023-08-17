@@ -4,9 +4,9 @@
 // For license and copyright information please follow this link:
 // https://github.com/desktop-app/legal/blob/master/LEGAL
 //
-#include <crl/common/crl_common_queue.h>
+#include <crl/crl_queue.h>
 
-#if defined CRL_USE_COMMON_QUEUE || !defined CRL_USE_DISPATCH
+#ifdef CRL_USE_COMMON_QUEUE
 
 #include <crl/crl_async.h>
 #include <crl/crl_fp_exceptions.h>
@@ -50,4 +50,4 @@ void queue::ProcessCallback(void *that) {
 
 } // namespace crl
 
-#endif // CRL_USE_COMMON_QUEUE || !CRL_USE_DISPATCH
+#endif // CRL_USE_COMMON_QUEUE

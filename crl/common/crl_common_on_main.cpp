@@ -4,9 +4,9 @@
 // For license and copyright information please follow this link:
 // https://github.com/desktop-app/legal/blob/master/LEGAL
 //
-#include <crl/common/crl_common_on_main.h>
+#include <crl/crl_on_main.h>
 
-#if defined CRL_USE_COMMON_QUEUE || !defined CRL_USE_DISPATCH
+#ifdef CRL_USE_COMMON_QUEUE
 
 #include <exception>
 
@@ -60,4 +60,4 @@ void init_main_queue(main_queue_processor processor) {
 
 } // namespace crl
 
-#endif // CRL_USE_COMMON_QUEUE || !CRL_USE_DISPATCH
+#endif // CRL_USE_COMMON_QUEUE
