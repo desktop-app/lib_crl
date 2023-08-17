@@ -79,7 +79,9 @@ if (build_macstore OR TARGET desktop-app::external_dispatch)
     )
 endif()
 
-target_link_libraries(lib_crl
-PUBLIC
-    desktop-app::external_qt
-)
+if (TARGET desktop-app::external_qt)
+    target_link_libraries(lib_crl
+    PUBLIC
+        desktop-app::external_qt
+    )
+endif()

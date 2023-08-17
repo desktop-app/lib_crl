@@ -48,9 +48,7 @@
 
 #define CRL_USE_QT
 
-#else // Qt
-#error "Configuration is not supported."
-#endif // !_MSC_VER && !dispatch && !Qt
+#endif // !_MSC_VER && !dispatch && Qt
 
 #if __has_include(<rpl/producer.h>)
 #define CRL_ENABLE_RPL_INTEGRATION
