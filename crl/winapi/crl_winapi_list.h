@@ -58,7 +58,7 @@ private:
 		ProcessEntryMethod process;
 	};
 
-	static_assert(std::is_pod_v<BasicEntry>);
+	static_assert(std::is_trivial_v<BasicEntry>);
 	static_assert(std::is_standard_layout_v<BasicEntry>);
 	static_assert(offsetof(BasicEntry, plain) == 0);
 
