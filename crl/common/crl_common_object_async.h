@@ -347,7 +347,7 @@ Result weak_async<Policy, Type>::producer(
 		](const Type &that) mutable {
 			method(
 				that
-			) | rpl::start_with_next_error_done([=](auto &&value) {
+			) | rpl::on_next_error_done([=](auto &&value) {
 				invoke([
 					consumer,
 					value = std::forward<decltype(value)>(value)
