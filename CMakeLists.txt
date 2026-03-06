@@ -21,6 +21,7 @@ PRIVATE
     crl/common/crl_common_on_main.cpp
     crl/common/crl_common_on_main.h
     crl/common/crl_common_on_main_guarded.h
+    crl/common/crl_common_on_main_queue.h
     crl/common/crl_common_queue.cpp
     crl/common/crl_common_queue.h
     crl/common/crl_common_semaphore.h

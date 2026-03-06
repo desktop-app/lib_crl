@@ -17,6 +17,7 @@
 #endif // !CRL_FORCE_COMMON_QUEUE && !CRL_USE_DISPATCH
 
 #include <crl/common/crl_common_on_main_guarded.h>
+#include <crl/common/crl_common_on_main_queue.h>
 #include <crl/common/crl_common_guards.h>
 #include <crl/qt/crl_qt_guards.h>
 
