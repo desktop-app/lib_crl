@@ -38,6 +38,7 @@ PRIVATE
     crl/linux/crl_linux_time.cpp
     crl/qt/crl_qt_async.h
     crl/qt/crl_qt_guards.h
+    crl/tmc/crl_tmc_async.h
     crl/winapi/crl_winapi_async.cpp
     crl/winapi/crl_winapi_async.h
     crl/winapi/crl_winapi_dll.h
@@ -77,6 +78,13 @@ if (build_macstore OR TARGET desktop-app::external_dispatch)
     target_compile_definitions(lib_crl
     PUBLIC
         CRL_FORCE_COMMON_QUEUE
+    )
+endif()
+
+if (TARGET desktop-app::external_tmc)
+    target_link_libraries(lib_crl
+    PUBLIC
+        desktop-app::external_tmc
     )
 endif()
 
