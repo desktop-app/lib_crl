@@ -44,11 +44,15 @@
 
 #define CRL_USE_DISPATCH
 
-#elif __has_include(<QtCore/QThreadPool>) // dispatch && !CRL_FORCE_QT
+#elif __has_include(<tmc/ex_cpu.hpp>) && !defined CRL_FORCE_QT // dispatch && !CRL_FORCE_QT
+
+#define CRL_USE_TMC
+
+#elif __has_include(<QtCore/QThreadPool>) // TMC && !CRL_FORCE_QT
 
 #define CRL_USE_QT
 
-#endif // !_MSC_VER && !dispatch && Qt
+#endif // !_MSC_VER && !dispatch && !TMC && Qt
 
 #if __has_include(<rpl/producer.h>)
 #define CRL_ENABLE_RPL_INTEGRATION

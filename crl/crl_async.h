@@ -12,8 +12,10 @@
 #include <crl/winapi/crl_winapi_async.h>
 #elif defined CRL_USE_DISPATCH // CRL_USE_WINAPI
 #include <crl/dispatch/crl_dispatch_async.h>
-#elif defined CRL_USE_QT // CRL_USE_DISPATCH
+#elif defined CRL_USE_TMC // CRL_USE_DISPATCH
+#include <crl/tmc/crl_tmc_async.h>
+#elif defined CRL_USE_QT // CRL_USE_TMC
 #include <crl/qt/crl_qt_async.h>
 #else // CRL_USE_QT
 #error "Configuration is not supported."
-#endif // !CRL_USE_WINAPI && !CRL_USE_DISPATCH && !CRL_USE_QT
+#endif // !CRL_USE_WINAPI && !CRL_USE_DISPATCH && !CRL_USE_TMC && !CRL_USE_QT
