@@ -31,20 +31,7 @@
 #define CRL_USE_WINAPI_LIST
 #endif // !CRL_FORCE_COMMON_LIST
 
-#elif __has_include(<dispatch/dispatch.h>) && !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
-
-// gcc compatibility
-#ifndef __has_feature
-#define __has_feature(x) 0
-#endif // !__has_feature
-
-#ifndef __has_extension
-#define __has_extension __has_feature
-#endif // !__has_extension
-
-#define CRL_USE_DISPATCH
-
-#elif __has_include(<tmc/ex_cpu.hpp>) && !defined CRL_FORCE_QT // dispatch && !CRL_FORCE_QT
+#elif __has_include(<tmc/ex_cpu.hpp>) && !defined CRL_FORCE_QT // _MSC_VER && !CRL_FORCE_QT
 
 #define CRL_USE_TMC
 
