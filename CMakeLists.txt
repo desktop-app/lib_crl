@@ -67,30 +67,20 @@ PUBLIC
     ${src_loc}
 )
 
-if (TARGET desktop-app::external_dispatch)
-    target_link_libraries(lib_crl
-    PUBLIC
-        desktop-app::external_dispatch
-    )
-endif()
-
-if (build_macstore OR TARGET desktop-app::external_dispatch)
-    target_compile_definitions(lib_crl
-    PUBLIC
-        CRL_FORCE_COMMON_QUEUE
-    )
-endif()
-
-if (TARGET desktop-app::external_tmc)
-    target_link_libraries(lib_crl
-    PUBLIC
-        desktop-app::external_tmc
-    )
-endif()
-
-if (TARGET desktop-app::external_qt)
-    target_link_libraries(lib_crl
-    PUBLIC
-        desktop-app::external_qt
-    )
+if (MSVC AND NOT CRL_FORCE_QT)
+    target_compile_definitions(lib_crl PUBLIC CRL_USE_WINAPI)
+elseif ((APPLE OR TARGET desktop-app::external_dispatch) AND NOT CRL_FORCE_QT)
+    if (TARGET desktop-app::external_dispatch)
+        target_link_libraries(lib_crl PUBLIC desktop-app::external_dispatch)
+    endif()
+    target_compile_definitions(lib_crl PUBLIC CRL_USE_DISPATCH)
+    if (build_macstore OR TARGET desktop-app::external_dispatch)
+        target_compile_definitions(lib_crl PUBLIC CRL_FORCE_COMMON_QUEUE)
+    endif()
+elseif (TARGET desktop-app::external_tmc AND NOT CRL_FORCE_QT)
+    target_link_libraries(lib_crl PUBLIC desktop-app::external_tmc)
+    target_compile_definitions(lib_crl PUBLIC CRL_USE_TMC)
+elseif (TARGET desktop-app::external_qt)
+    target_link_libraries(lib_crl PUBLIC desktop-app::external_qt)
+    target_compile_definitions(lib_crl PUBLIC CRL_USE_QT)
 endif()
