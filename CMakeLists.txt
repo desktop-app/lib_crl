@@ -45,8 +45,6 @@ PRIVATE
     crl/winapi/crl_winapi_fp_exceptions.cpp
     crl/winapi/crl_winapi_list.cpp
     crl/winapi/crl_winapi_list.h
-    crl/winapi/crl_winapi_semaphore.cpp
-    crl/winapi/crl_winapi_semaphore.h
     crl/winapi/crl_winapi_time.cpp
     crl/winapi/crl_winapi_windows_h.h
     crl/crl.h

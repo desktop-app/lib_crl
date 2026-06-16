@@ -13,6 +13,8 @@
 #include <crl/common/crl_common_utils.h>
 #include <crl/crl_semaphore.h>
 
+#include <memory>
+
 #ifndef CRL_USE_WINAPI
 #error "This file should not be included by client-code directly."
 #endif // CRL_USE_WINAPI
