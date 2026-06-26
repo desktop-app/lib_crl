@@ -18,9 +18,19 @@
 
 namespace crl::details {
 
+inline void ensure_tmc_cpu_executor_init() {
+    // init() is idempotent, but doesn't block other callers while executing.
+    // This static initializer protects against multiple execution, and
+    // concurrent callers block here until it finishes, ensuring that the 
+    // executor is fully initialized before post(). Subsequent calls are
+    // just a cheap acquire-load of the guard variable.
+    static int once = (tmc::cpu_executor().init(), 0);
+    (void)once;
+}
+
 template <typename Callable>
 inline void async_any(Callable &&callable) {
-    tmc::cpu_executor().init();
+    ensure_tmc_cpu_executor_init();
     tmc::post(tmc::cpu_executor(), std::forward<Callable>(callable));
 }
 
