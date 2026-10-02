@@ -15,6 +15,12 @@ thread_policy::thread_policy() {
 	std::thread([=] { run(); }).detach();
 }
 
+thread_policy::~thread_policy() {
+	// WHY: the job pushed by async_releasing() can free us before its
+	// pusher unlocks, so wait for that unlock before members die.
+	std::unique_lock<std::mutex> lock(_mutex);
+}
+
 void thread_policy::run() {
 	toggle_fp_exceptions(true);
 

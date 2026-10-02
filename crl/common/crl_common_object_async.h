@@ -214,7 +214,7 @@ void object_async_base<Policy>::sync(Callable &&callable) const {
 template <typename Policy>
 template <typename Value, typename>
 void object_async_base<Policy>::destroy(Value &&value) const {
-	Policy::async_plain([moved = std::move(value)]{});
+	Policy::async_releasing([moved = std::move(value)]{});
 }
 
 template <typename Type>

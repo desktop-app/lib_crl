@@ -17,6 +17,9 @@ protected:
 	template <typename Callable>
 	void async_plain(Callable &&callable) const;
 
+	template <typename Callable>
+	void async_releasing(Callable &&callable) const;
+
 private:
 	mutable crl::queue _queue;
 
@@ -25,6 +28,11 @@ private:
 template <typename Callable>
 void queue_policy::async_plain(Callable &&callable) const {
 	_queue.async(std::forward<Callable>(callable));
+}
+
+template <typename Callable>
+void queue_policy::async_releasing(Callable &&callable) const {
+	async_plain(std::forward<Callable>(callable));
 }
 
 } // namespace details

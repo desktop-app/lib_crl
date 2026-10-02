@@ -9,6 +9,7 @@
 #include <crl/common/crl_common_object_async.h>
 #include <crl/common/crl_common_list.h>
 #include <condition_variable>
+#include <mutex>
 
 namespace crl {
 namespace details {
@@ -16,9 +17,13 @@ namespace details {
 class thread_policy {
 protected:
 	thread_policy();
+	~thread_policy();
 
 	template <typename Callable>
 	void async_plain(Callable &&callable) const;
+
+	template <typename Callable>
+	void async_releasing(Callable &&callable) const;
 
 private:
 	void run();
@@ -34,6 +39,14 @@ template <typename Callable>
 void thread_policy::async_plain(Callable &&callable) const {
 	if (_list.push_is_first(std::forward<Callable>(callable))) {
 		wake_async();
+	}
+}
+
+template <typename Callable>
+void thread_policy::async_releasing(Callable &&callable) const {
+	std::unique_lock<std::mutex> lock(_mutex);
+	if (_list.push_is_first(std::forward<Callable>(callable))) {
+		_variable.notify_one();
 	}
 }
 
