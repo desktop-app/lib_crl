@@ -22,7 +22,6 @@ void thread_policy::run() {
 		if (!_list.process()) {
 			break;
 		}
-		_queued.clear();
 
 		std::unique_lock<std::mutex> lock(_mutex);
 		_variable.wait(lock, [=] { return !_list.empty(); });
@@ -30,10 +29,9 @@ void thread_policy::run() {
 }
 
 void thread_policy::wake_async() const {
-	if (!_queued.test_and_set()) {
-		std::unique_lock<std::mutex> lock(_mutex);
-		_variable.notify_one();
-	}
+	// Always notify: a "wake pending" flag can go stale and mute the queue.
+	std::unique_lock<std::mutex> lock(_mutex);
+	_variable.notify_one();
 }
 
 } // namespace crl::details
