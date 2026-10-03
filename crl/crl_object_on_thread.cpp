@@ -16,9 +16,11 @@ thread_policy::thread_policy() {
 }
 
 thread_policy::~thread_policy() {
-	// WHY: the job pushed by async_releasing() can free us before its
-	// pusher unlocks, so wait for that unlock before members die.
-	std::unique_lock<std::mutex> lock(_mutex);
+	// WHY: the job pushed by async_releasing() can free us while its pusher
+	// is still waking this thread, so wait until it leaves async_releasing().
+	while (_touching.load(std::memory_order_acquire)) {
+		std::this_thread::yield();
+	}
 }
 
 void thread_policy::run() {
