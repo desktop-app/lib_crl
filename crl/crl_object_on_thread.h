@@ -29,6 +29,7 @@ private:
 	void run();
 	void wake_async() const;
 
+	[[maybe_unused]] char _refcountPadding[kQueueCacheSeparation] = {};
 	mutable details::list _list;
 	mutable semaphore _semaphore;
 	mutable std::atomic<int> _waking = 0;

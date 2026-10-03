@@ -13,6 +13,9 @@
 
 namespace crl::details {
 
+// Separate queue heads from shared_ptr counters on 128-byte cache lines.
+inline constexpr auto kQueueCacheSeparation = 128;
+
 class list {
 public:
 	list();

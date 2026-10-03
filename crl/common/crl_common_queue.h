@@ -55,6 +55,7 @@ private:
 	void process();
 
 	main_queue_processor _main_processor = nullptr;
+	[[maybe_unused]] char _refcountPadding[details::kQueueCacheSeparation] = {};
 	details::list _list;
 
 };
