@@ -11,11 +11,25 @@
 #include <crl/crl_async.h>
 #include <crl/crl_fp_exceptions.h>
 
+#include <thread>
+
 namespace crl {
 
 queue::queue() = default;
 
 queue::queue(main_queue_processor processor) : _main_processor(processor) {
+}
+
+queue::queue(self_destroying_t) : _self_destroying(true) {
+}
+
+queue::~queue() {
+	// WHY: a self-destroying queue's last job can free it while a releasing
+	// pusher or the previous batch's tail is still between its push or
+	// _queued.clear() and its last access, so wait for those few steps.
+	while (_touching.load(std::memory_order_acquire)) {
+		std::this_thread::yield();
+	}
 }
 
 void queue::wake_async() {
@@ -29,7 +43,18 @@ void queue::wake_async() {
 void queue::process() {
 	if (!_list.process()) {
 		return;
+	} else if (!_self_destroying) {
+		finish_batch();
+		return;
 	}
+	_touching.fetch_add(1);
+	const auto guard = details::finally([&] {
+		_touching.fetch_sub(1, std::memory_order_release);
+	});
+	finish_batch();
+}
+
+void queue::finish_batch() {
 	_queued.clear();
 
 	if (!_list.empty()) {

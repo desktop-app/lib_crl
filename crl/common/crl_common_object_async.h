@@ -11,6 +11,7 @@
 #include <crl/crl_semaphore.h>
 #include <memory>
 #include <tuple>
+#include <type_traits>
 
 #ifdef CRL_ENABLE_RPL_INTEGRATION
 #include <rpl/producer.h>
@@ -31,6 +32,9 @@ public:
 protected:
 	template <typename Callable>
 	void async(Callable &&callable) const;
+
+	template <typename Callable>
+	void async_releasing(Callable &&callable) const;
 
 	template <typename Callable>
 	void sync(Callable &&callable) const;
@@ -73,6 +77,12 @@ public:
 
 	template <typename Method>
 	void with_sync(Method &&method) const;
+
+	template <typename Method, typename Owner>
+	void with_owned(Method &&method, Owner &&owner);
+
+	template <typename Method, typename Owner>
+	void with_owned(Method &&method, Owner &&owner) const;
 
 };
 
@@ -202,6 +212,12 @@ void object_async_base<Policy>::async(Callable &&callable) const {
 
 template <typename Policy>
 template <typename Callable>
+void object_async_base<Policy>::async_releasing(Callable &&callable) const {
+	Policy::async_releasing(std::forward<Callable>(callable));
+}
+
+template <typename Policy>
+template <typename Callable>
 void object_async_base<Policy>::sync(Callable &&callable) const {
 	semaphore waiter;
 	Policy::async_plain([&] {
@@ -291,6 +307,36 @@ void object_async_data<Policy, Type>::with_sync(Method &&method) const {
 }
 
 template <typename Policy, typename Type>
+template <typename Method, typename Owner>
+void object_async_data<Policy, Type>::with_owned(
+		Method &&method,
+		Owner &&owner) {
+	static_assert(!std::is_reference_v<Owner>);
+	object_async_base<Policy>::async_releasing([
+		this,
+		owner = std::forward<Owner>(owner),
+		method = std::forward<Method>(method)
+	]() mutable {
+		std::move(method)(object_async_storage<Type>::value());
+	});
+}
+
+template <typename Policy, typename Type>
+template <typename Method, typename Owner>
+void object_async_data<Policy, Type>::with_owned(
+		Method &&method,
+		Owner &&owner) const {
+	static_assert(!std::is_reference_v<Owner>);
+	object_async_base<Policy>::async_releasing([
+		this,
+		owner = std::forward<Owner>(owner),
+		method = std::forward<Method>(method)
+	]() mutable {
+		std::move(method)(object_async_storage<Type>::value());
+	});
+}
+
+template <typename Policy, typename Type>
 weak_async<Policy, Type>::weak_async(const std::shared_ptr<data> &strong)
 : _weak(strong) {
 }
@@ -300,8 +346,14 @@ template <typename Method>
 void weak_async<Policy, Type>::with(Method &&method) const {
 	if (auto strong = _weak.lock()) {
 		const auto raw = strong.get();
-		raw->with(std::move(method));
-		raw->destroy(std::move(strong));
+		using Moved = std::decay_t<Method>;
+		if constexpr (std::is_nothrow_move_constructible_v<Moved>) {
+			raw->with_owned(std::move(method), std::move(strong));
+		} else {
+			// A throwing move inside the job's push could drop the owner there.
+			raw->with(std::move(method));
+			raw->destroy(std::move(strong));
+		}
 	}
 }
 
