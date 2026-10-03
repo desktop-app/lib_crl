@@ -21,11 +21,7 @@ protected:
 	void async_releasing(Callable &&callable) const;
 
 private:
-#ifdef CRL_USE_COMMON_QUEUE
-	mutable crl::queue _queue{ crl::queue::self_destroying_t() };
-#else // CRL_USE_COMMON_QUEUE
 	mutable crl::queue _queue;
-#endif // !CRL_USE_COMMON_QUEUE
 
 };
 
@@ -36,11 +32,7 @@ void queue_policy::async_plain(Callable &&callable) const {
 
 template <typename Callable>
 void queue_policy::async_releasing(Callable &&callable) const {
-#ifdef CRL_USE_COMMON_QUEUE
-	_queue.async_releasing(std::forward<Callable>(callable));
-#else // CRL_USE_COMMON_QUEUE
 	async_plain(std::forward<Callable>(callable));
-#endif // !CRL_USE_COMMON_QUEUE
 }
 
 } // namespace details

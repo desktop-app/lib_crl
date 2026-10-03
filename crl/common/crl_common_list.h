@@ -8,17 +8,8 @@
 
 #include <crl/common/crl_common_config.h>
 
-#if defined CRL_USE_WINAPI_LIST
-
-#include <crl/winapi/crl_winapi_list.h>
-
-#else // CRL_USE_WINAPI_LIST
-
 #include <crl/common/crl_common_utils.h>
-#include <crl/crl_semaphore.h>
 #include <atomic>
-
-#define CRL_USE_COMMON_LIST
 
 namespace crl::details {
 
@@ -31,7 +22,7 @@ public:
 		return push_entry(AllocateEntry(std::forward<Callable>(callable)));
 	}
 	bool process();
-	bool empty() const;
+	[[nodiscard]] bool try_idle();
 
 	~list();
 
@@ -80,11 +71,13 @@ private:
 
 	bool push_entry(BasicEntry *entry);
 
-	std::atomic<BasicEntry*> _head = nullptr;
+	static BasicEntry _idle;
+	static_assert(std::atomic<BasicEntry*>::is_always_lock_free);
+
+	// The idle marker makes publication the last access for active pushers.
+	std::atomic<BasicEntry*> _head = &_idle;
 	bool *_alive = nullptr;
 
 };
 
 } // namespace crl::details
-
-#endif // !CRL_USE_WINAPI_LIST

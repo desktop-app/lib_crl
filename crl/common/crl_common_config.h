@@ -25,10 +25,6 @@
 #error "Configuration is not supported."
 #endif // !_WIN64 && !_M_IX86
 
-#ifndef CRL_FORCE_COMMON_LIST
-#define CRL_USE_WINAPI_LIST
-#endif // !CRL_FORCE_COMMON_LIST
-
 #endif // _MSC_VER
 
 #ifdef CRL_USE_DISPATCH

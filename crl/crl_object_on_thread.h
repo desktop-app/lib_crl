@@ -8,9 +8,8 @@
 
 #include <crl/common/crl_common_object_async.h>
 #include <crl/common/crl_common_list.h>
+#include <crl/crl_semaphore.h>
 #include <atomic>
-#include <condition_variable>
-#include <mutex>
 
 namespace crl {
 namespace details {
@@ -30,10 +29,9 @@ private:
 	void run();
 	void wake_async() const;
 
-	mutable std::mutex _mutex;
-	mutable std::condition_variable _variable;
 	mutable details::list _list;
-	mutable std::atomic<int> _touching = 0;
+	mutable semaphore _semaphore;
+	mutable std::atomic<int> _waking = 0;
 
 };
 
@@ -46,10 +44,6 @@ void thread_policy::async_plain(Callable &&callable) const {
 
 template <typename Callable>
 void thread_policy::async_releasing(Callable &&callable) const {
-	_touching.fetch_add(1);
-	const auto guard = details::finally([&] {
-		_touching.fetch_sub(1, std::memory_order_release);
-	});
 	async_plain(std::forward<Callable>(callable));
 }
 
